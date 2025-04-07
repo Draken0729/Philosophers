@@ -6,7 +6,7 @@
 /*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:36:02 by quentin           #+#    #+#             */
-/*   Updated: 2025/03/20 12:05:58 by quentin          ###   ########.fr       */
+/*   Updated: 2025/03/31 11:32:14 by quentin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_philo
 {
 	int				id;
 	int is_dead;
+    int meals_eaten;
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
@@ -40,8 +41,9 @@ typedef struct s_data
     int time_to_die;
     int time_to_eat;
     int time_to_sleep;
-    int number_of_times_each_philosopher_must_eat;
+    int must_eat;
     int dead;
+    int finished;
     pthread_mutex_t *forks;
     pthread_mutex_t print_mutex;
     pthread_mutex_t death_mutex;
