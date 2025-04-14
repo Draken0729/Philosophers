@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: qbaret <qbaret@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:55:55 by quentin           #+#    #+#             */
-/*   Updated: 2025/03/31 14:00:45 by quentin          ###   ########.fr       */
+/*   Updated: 2025/04/07 16:03:56 by qbaret           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void *monitor(void *arg)
             if (get_time() - data->philos[i].last_meal > data->time_to_die)
             {
                 data->dead = 1;
-                printf("⚠️ Philosophe %d est mort\n", data->philos[i].id);
+                print_status(&data->philos[i], "died");
                 pthread_mutex_unlock(&data->death_mutex);
                 return NULL;
             }

@@ -1,4 +1,4 @@
-NAME = philo.a
+NAME = philo
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -pthread

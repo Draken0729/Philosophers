@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: qbaret <qbaret@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:29:08 by quentin           #+#    #+#             */
-/*   Updated: 2025/03/31 13:45:57 by quentin          ###   ########.fr       */
+/*   Updated: 2025/04/07 16:13:37 by qbaret           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void eat(t_philo *philo)
     philo->last_meal = get_time();
     pthread_mutex_unlock(&philo->data->death_mutex);
 
-    print_status(philo, "mange 🍽️");
+    print_status(philo, "is eating");
     usleep(philo->data->time_to_eat * 1000 - 500);
 
     pthread_mutex_lock(&philo->data->death_mutex);
@@ -34,7 +34,17 @@ void eat(t_philo *philo)
 void *philosopher_routine(void *arg)
 {
     t_philo *philo = (t_philo *)arg;
-        
+
+    if (philo->id % 2 == 0)
+    {
+        usleep(philo->data->time_to_eat);
+    }
+    
+    if (philo->id % 2 != 0 && philo->id == 0)
+    {
+        usleep(philo->data->time_to_eat);
+    }
+    
     while (1)
     {
         pthread_mutex_lock(&philo->data->death_mutex);
@@ -45,19 +55,19 @@ void *philosopher_routine(void *arg)
         }
         pthread_mutex_unlock(&philo->data->death_mutex);
 
-        if (philo->id == philo->data->num_philos - 1)
+        if (philo->id % 2 == 0)
         {
             pthread_mutex_lock(philo->right_fork);
-            print_status(philo, "a pris la fourchette droite 🍴");
+            print_status(philo, "has taken a fork");
             pthread_mutex_lock(philo->left_fork);
-            print_status(philo, "a pris la fourchette gauche 🍴");
+            print_status(philo, "has taken a fork");
         }
         else
         {
             pthread_mutex_lock(philo->left_fork);
-            print_status(philo, "a pris la fourchette gauche 🍴");
+            print_status(philo, "has taken a fork");
             pthread_mutex_lock(philo->right_fork);
-            print_status(philo, "a pris la fourchette droite 🍴");
+            print_status(philo, "has taken a fork");
         }
 
         pthread_mutex_lock(&philo->data->death_mutex);
@@ -70,7 +80,6 @@ void *philosopher_routine(void *arg)
         }
         pthread_mutex_unlock(&philo->data->death_mutex);
 
-        print_status(philo, "a pris les deux fourchettes 🍽️");
         eat(philo);
 
         pthread_mutex_unlock(philo->left_fork);
@@ -84,10 +93,10 @@ void *philosopher_routine(void *arg)
         }
         pthread_mutex_unlock(&philo->data->death_mutex);
 
-        print_status(philo, "dort 😴");
+        print_status(philo, "is sleeping");
         usleep(philo->data->time_to_sleep * 1000 - 500);
 
-        print_status(philo, "pense 🤔");
+        print_status(philo, "is thinking");
         usleep(1000);
     }
     return NULL;

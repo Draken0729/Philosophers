@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: qbaret <qbaret@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:55:52 by quentin           #+#    #+#             */
-/*   Updated: 2025/03/20 10:14:06 by quentin          ###   ########.fr       */
+/*   Updated: 2025/04/07 15:13:43 by qbaret           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void print_status(t_philo *philo, char *status)
     pthread_mutex_lock(&philo->data->print_mutex);
     if (!philo->data->dead)
 	{
-        printf("[%lld ms] Philosophe %d %s\n",
+        printf("%lld %d %s\n",
                get_time() - philo->data->start_time, philo->id, status);
     }
     pthread_mutex_unlock(&philo->data->print_mutex);
