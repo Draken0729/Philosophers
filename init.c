@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: qbaret <qbaret@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:45:14 by quentin           #+#    #+#             */
-/*   Updated: 2025/03/20 12:07:08 by quentin          ###   ########.fr       */
+/*   Updated: 2025/05/23 11:23:52 by qbaret           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void init_philosophers(t_data *data)
     data->philos = malloc(sizeof(t_philo) * data->num_philos);
     data->start_time = get_time();
     data->dead = 0;
+    data->finished = 0;
     while (i < data->num_philos)
 	{
         data->philos[i].id = i;

@@ -6,12 +6,21 @@
 /*   By: qbaret <qbaret@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:55:52 by quentin           #+#    #+#             */
-/*   Updated: 2025/04/07 15:13:43 by qbaret           ###   ########.fr       */
+/*   Updated: 2025/05/23 14:12:26 by qbaret           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+int ft_strcmp(const char *s1, const char *s2)
+{
+    while (*s1 && (*s1 == *s2))
+    {
+        s1++;
+        s2++;
+    }
+    return (unsigned char)*s1 - (unsigned char)*s2;
+}
 long long get_time(void)
 {
     struct timeval tv;
@@ -22,13 +31,16 @@ long long get_time(void)
 void print_status(t_philo *philo, char *status)
 {
     pthread_mutex_lock(&philo->data->print_mutex);
-    if (!philo->data->dead)
-	{
-        printf("%lld %d %s\n",
-               get_time() - philo->data->start_time, philo->id, status);
+
+    if (!philo->data->dead || (philo->data->dead && ft_strcmp(status, "died") == 0))
+    {
+        ft_printf("%u %d %s\n",
+                  get_time() - philo->data->start_time, philo->id + 1, status);
     }
+
     pthread_mutex_unlock(&philo->data->print_mutex);
 }
+
 int	ft_atoi(const char *nptr)
 {
 	int	i;

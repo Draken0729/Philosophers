@@ -6,7 +6,7 @@
 /*   By: qbaret <qbaret@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:36:05 by quentin           #+#    #+#             */
-/*   Updated: 2025/04/07 15:38:49 by qbaret           ###   ########.fr       */
+/*   Updated: 2025/05/23 11:28:01 by qbaret           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,12 @@ int main(int argc, char **argv)
 	data.time_to_eat = ft_atoi(argv[3]);
 	data.time_to_sleep = ft_atoi(argv[4]);
 	if(argc == 6)
+    {
 		data.must_eat = ft_atoi(argv[5]);
-	else
+        if(data.must_eat < 0)
+            return (ft_printf("Paramètres invalides.\n"), 1);
+    }
+    else
 		data.must_eat = -1;
 	if (data.num_philos <= 0 || data.time_to_die <= 0 || data.time_to_eat <= 0 || data.time_to_sleep <= 0)
         return (ft_printf("Paramètres invalides.\n"), 1);

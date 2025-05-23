@@ -5,7 +5,9 @@ CFLAGS = -Wall -Wextra -Werror -pthread
 
 FT_PRINTF_DIR = ft_printf
 
-SRCS = main.c utils.c init.c philo.c actions.c $(FT_PRINTF_DIR)/ft_printf.c
+SRCS = main.c utils.c init.c philo.c actions.c  $(FT_PRINTF_DIR)/ft_printf.c \
+												$(FT_PRINTF_DIR)/ft_print_pointer.c \
+												$(FT_PRINTF_DIR)/ft_print_utils.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

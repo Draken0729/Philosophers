@@ -6,7 +6,7 @@
 /*   By: qbaret <qbaret@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:55:55 by quentin           #+#    #+#             */
-/*   Updated: 2025/04/07 16:03:56 by qbaret           ###   ########.fr       */
+/*   Updated: 2025/05/23 14:11:52 by qbaret           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@ void *monitor(void *arg)
 {
     t_data *data = (t_data *)arg;
     int i;
+
+    if(data->num_philos == 1)
+    {
+        data->dead = 1;
+        ft_printf("0 1 has taken a fork\n");
+        usleep(data->time_to_die * 1000);
+    }
     
     while (1)
     {
@@ -30,7 +37,7 @@ void *monitor(void *arg)
                 pthread_mutex_unlock(&data->death_mutex);
                 return NULL;
             }
-
+            
             if (data->must_eat > 0 && data->finished >= data->num_philos)
             {
                 printf("✅ Tous les philosophes ont fini de manger !\n");
