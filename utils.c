@@ -6,7 +6,7 @@
 /*   By: qbaret <qbaret@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:55:52 by quentin           #+#    #+#             */
-/*   Updated: 2025/05/23 14:12:26 by qbaret           ###   ########.fr       */
+/*   Updated: 2025/05/23 14:36:24 by qbaret           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ long long get_time(void)
 void print_status(t_philo *philo, char *status)
 {
     pthread_mutex_lock(&philo->data->print_mutex);
-
+    pthread_mutex_lock(&philo->data->death_mutex);
     if (!philo->data->dead || (philo->data->dead && ft_strcmp(status, "died") == 0))
     {
         ft_printf("%u %d %s\n",
                   get_time() - philo->data->start_time, philo->id + 1, status);
     }
-
+    pthread_mutex_unlock(&philo->data->death_mutex);
     pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
