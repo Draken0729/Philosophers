@@ -6,7 +6,7 @@
 /*   By: qbaret <qbaret@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:29:08 by quentin           #+#    #+#             */
-/*   Updated: 2025/05/23 11:15:43 by qbaret           ###   ########.fr       */
+/*   Updated: 2025/05/23 14:53:40 by qbaret           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ void eat(t_philo *philo)
 void *philosopher_routine(void *arg)
 {
     t_philo *philo = (t_philo *)arg;
+
+    if (philo->data->num_philos== 1)
+    {
+        return NULL;
+    }
 
     if (philo->id % 2 == 0)
     {
