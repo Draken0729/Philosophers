@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qbaret <qbaret@student.42.fr>              +#+  +:+       +#+        */
+/*   By: quentin83400 <quentin83400@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:36:02 by quentin           #+#    #+#             */
-/*   Updated: 2025/05/23 13:05:40 by qbaret           ###   ########.fr       */
+/*   Updated: 2025/06/26 11:58:47 by quentin8340      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/time.h>
+# include <stdbool.h>
 
 typedef struct s_data t_data;
 
@@ -59,5 +60,6 @@ void *philosopher_routine(void *arg);
 void *monitor(void *arg);
 void cleanup(t_data *data);
 int	ft_atoi(const char *nptr);
+bool	ft_usleep(long long time, t_philo *philo);
 
 #endif

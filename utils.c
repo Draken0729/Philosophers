@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qbaret <qbaret@student.42.fr>              +#+  +:+       +#+        */
+/*   By: quentin83400 <quentin83400@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:55:52 by quentin           #+#    #+#             */
-/*   Updated: 2025/05/23 14:36:24 by qbaret           ###   ########.fr       */
+/*   Updated: 2025/06/26 12:15:30 by quentin8340      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,8 @@ long long get_time(void)
 void print_status(t_philo *philo, char *status)
 {
     pthread_mutex_lock(&philo->data->print_mutex);
-    pthread_mutex_lock(&philo->data->death_mutex);
-    if (!philo->data->dead || (philo->data->dead && ft_strcmp(status, "died") == 0))
-    {
-        ft_printf("%u %d %s\n",
-                  get_time() - philo->data->start_time, philo->id + 1, status);
-    }
-    pthread_mutex_unlock(&philo->data->death_mutex);
-    pthread_mutex_unlock(&philo->data->print_mutex);
+    ft_printf("%u %d %s\n", get_time() - philo->data->start_time, philo->id + 1, status);
+	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
 int	ft_atoi(const char *nptr)
@@ -68,5 +62,24 @@ int	ft_atoi(const char *nptr)
 		i++;
 	}
 	return (result * sign);
+}
+
+bool	ft_usleep(long long time, t_philo *philo)
+{
+	long long	start_time;
+
+	start_time = get_time();
+	while (get_time() - start_time < time)
+	{
+		usleep(1000);
+		pthread_mutex_lock(&philo->data->death_mutex);
+		if(philo->data->dead)
+		{
+			pthread_mutex_unlock(&philo->data->death_mutex);
+			return (false);
+		}
+		pthread_mutex_unlock(&philo->data->death_mutex);
+	}
+	return (true);
 }
 

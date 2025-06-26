@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qbaret <qbaret@student.42.fr>              +#+  +:+       +#+        */
+/*   By: quentin83400 <quentin83400@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:55:55 by quentin           #+#    #+#             */
-/*   Updated: 2025/05/23 14:55:21 by qbaret           ###   ########.fr       */
+/*   Updated: 2025/06/26 12:13:59 by quentin8340      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void *monitor(void *arg)
 {
     t_data *data = (t_data *)arg;
-    
     int i;
 
     if(data->num_philos == 1)
