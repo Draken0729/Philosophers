@@ -6,32 +6,35 @@
 /*   By: quentin83400 <quentin83400@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:55:52 by quentin           #+#    #+#             */
-/*   Updated: 2025/06/26 12:15:30 by quentin8340      ###   ########.fr       */
+/*   Updated: 2025/06/27 09:44:31 by quentin8340      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int ft_strcmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-    while (*s1 && (*s1 == *s2))
-    {
-        s1++;
-        s2++;
-    }
-    return (unsigned char)*s1 - (unsigned char)*s2;
-}
-long long get_time(void)
-{
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return (tv.tv_sec * 1000LL + tv.tv_usec / 1000LL);
+	while (*s1 && (*s1 == *s2))
+	{
+		s1++;
+		s2++;
+	}
+	return ((unsigned char)*s1 - (unsigned char)*s2);
 }
 
-void print_status(t_philo *philo, char *status)
+long long	get_time(void)
 {
-    pthread_mutex_lock(&philo->data->print_mutex);
-    ft_printf("%u %d %s\n", get_time() - philo->data->start_time, philo->id + 1, status);
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000LL + tv.tv_usec / 1000LL);
+}
+
+void	print_status(t_philo *philo, char *status)
+{
+	pthread_mutex_lock(&philo->data->print_mutex);
+	ft_printf("%u %d %s\n", get_time() - philo->data->start_time, philo->id + 1,
+		status);
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
@@ -73,7 +76,7 @@ bool	ft_usleep(long long time, t_philo *philo)
 	{
 		usleep(1000);
 		pthread_mutex_lock(&philo->data->death_mutex);
-		if(philo->data->dead)
+		if (philo->data->dead)
 		{
 			pthread_mutex_unlock(&philo->data->death_mutex);
 			return (false);
@@ -82,4 +85,3 @@ bool	ft_usleep(long long time, t_philo *philo)
 	}
 	return (true);
 }
-
