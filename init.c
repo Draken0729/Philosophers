@@ -6,11 +6,19 @@
 /*   By: quentin83400 <quentin83400@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:45:14 by quentin           #+#    #+#             */
-/*   Updated: 2025/06/27 09:43:57 by quentin8340      ###   ########.fr       */
+/*   Updated: 2025/07/02 13:50:54 by quentin8340      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	wait_start(t_philo *philo)
+{
+	if (philo->id % 2 == 0)
+		ft_usleep(philo->data->time_to_eat, philo);
+	else if (philo->data->num_philos % 2 != 0 && philo->id == 0)
+		ft_usleep(philo->data->time_to_eat, philo);
+}
 
 void	init_mutexes(t_data *data)
 {

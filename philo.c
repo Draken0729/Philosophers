@@ -6,7 +6,7 @@
 /*   By: quentin83400 <quentin83400@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:29:08 by quentin           #+#    #+#             */
-/*   Updated: 2025/06/27 11:26:48 by quentin8340      ###   ########.fr       */
+/*   Updated: 2025/07/02 14:02:13 by quentin8340      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,6 @@ bool	is_dead(t_philo *philo)
 	ret = philo->data->dead;
 	pthread_mutex_unlock(&philo->data->death_mutex);
 	return (ret);
-}
-
-void	wait_start(t_philo *philo)
-{
-	if (philo->id % 2 == 0)
-		ft_usleep(philo->data->time_to_eat, philo);
-	else if (philo->data->num_philos % 2 != 0 && philo->id == 0)
-		ft_usleep(philo->data->time_to_eat, philo);
 }
 
 bool	take_forks(t_philo *philo)
@@ -55,6 +47,16 @@ void	drop_forks(t_philo *philo)
 	pthread_mutex_unlock(philo->right_fork);
 }
 
+static bool	check_and_drop_if_dead(t_philo *philo)
+{
+	if (is_dead(philo))
+	{
+		drop_forks(philo);
+		return (true);
+	}
+	return (false);
+}
+
 void	*philosopher_routine(void *arg)
 {
 	t_philo	*philo;
@@ -65,23 +67,13 @@ void	*philosopher_routine(void *arg)
 	wait_start(philo);
 	while (!is_dead(philo))
 	{
-		if (!take_forks(philo))
+		if (!take_forks(philo) || is_dead(philo))
 			break ;
-		if (is_dead(philo))
-		{
-			drop_forks(philo);
-			break ;
-		}
 		eat(philo);
-		if (is_dead(philo))
-		{
-			drop_forks(philo);
+		if (check_and_drop_if_dead(philo))
 			break ;
-		}
 		drop_forks(philo);
-		if (is_dead(philo))
-			break ;
-		if (!do_sleep_and_think(philo))
+		if (is_dead(philo) || !do_sleep_and_think(philo))
 			break ;
 	}
 	return (NULL);
