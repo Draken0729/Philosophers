@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quentin83400 <quentin83400@student.42.f    +#+  +:+       +#+        */
+/*   By: qbaret <qbaret@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:29:08 by quentin           #+#    #+#             */
-/*   Updated: 2025/07/02 14:02:13 by quentin8340      ###   ########.fr       */
+/*   Updated: 2025/07/03 10:47:58 by qbaret           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,16 @@ bool	take_forks(t_philo *philo)
 
 void	drop_forks(t_philo *philo)
 {
-	pthread_mutex_unlock(philo->left_fork);
-	pthread_mutex_unlock(philo->right_fork);
+	if(philo->id % 2 == 0)
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+	}
 }
 
 static bool	check_and_drop_if_dead(t_philo *philo)
@@ -67,13 +75,13 @@ void	*philosopher_routine(void *arg)
 	wait_start(philo);
 	while (!is_dead(philo))
 	{
-		if (!take_forks(philo) || is_dead(philo))
+		if (!take_forks(philo) || check_and_drop_if_dead(philo))
 			break ;
 		eat(philo);
 		if (check_and_drop_if_dead(philo))
 			break ;
 		drop_forks(philo);
-		if (is_dead(philo) || !do_sleep_and_think(philo))
+		if (check_and_drop_if_dead(philo) || !do_sleep_and_think(philo))
 			break ;
 	}
 	return (NULL);
